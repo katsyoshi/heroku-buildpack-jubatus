@@ -1,1 +1,6 @@
-# heroku-jubatus
+# heroku-buildpack-jubatus
+
+easy deploy for heroku
+
+# LICENSE
+MIT
