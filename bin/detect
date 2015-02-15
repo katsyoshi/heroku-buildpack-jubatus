@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -d $1/jubatus ] ; then
+    echo "JUBATUS"
+    exit 0
+else
+    exit 1
+fi

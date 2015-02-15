@@ -1,0 +1,20 @@
+#!/bin/sh
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+BUILD_DIR=$1
+VENDOR='jubatus'
+JUBATUS_PREFIX=${BUILD_DIR}/${VENDOR}
+
+echo '-----> download jubatus-installer'
+git clone --depth 1 git://github.com/jubatus/jubatus-installer.git
+
+echo 'install jubatus' | indent
+cd jubatus-installer
+./install.sh -p ${JUBATUS_PREFIX}
+
+mkdir ${BUILD_DIR}/.profile.d/
+cp ${JUBATUS_PREFIX}/share/jubatus/jubatus.profile ${BUILD_DIR}/.profile.d/jubatus.sh
+PROFILE_PATH=${BUILD_DIR}/.profile.d/jubatus.sh
