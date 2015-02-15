@@ -4,5 +4,6 @@ if [ -d $1/jubatus ] ; then
     echo "JUBATUS"
     exit 0
 else
+    echo "HOGE"
     exit 1
 fi
