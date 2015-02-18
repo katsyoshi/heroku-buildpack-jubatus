@@ -1,20 +1,24 @@
 #!/bin/sh
 
 indent() {
-  sed -u 's/^/       /'
+    sed -u 's/^/       /'
 }
 
 BUILD_DIR=$1
 VENDOR='jubatus'
-JUBATUS_PREFIX=${BUILD_DIR}/${VENDOR}
 
-echo '-----> download jubatus-installer'
-git clone --depth 1 git://github.com/jubatus/jubatus-installer.git
-
-echo 'install jubatus' | indent
-cd jubatus-installer
-./install.sh -p ${JUBATUS_PREFIX}
+echo '-----> download jubatus'
+DOWNLOAD_URL="https://katsyoshi.org/download/jubatus-0.6.6.tar.xz"
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+cd $BUILD_DIR
+echo '-----> install jubatus'
+curl -L --silent $DOWNLOAD_URL | tar xJ
 
 mkdir ${BUILD_DIR}/.profile.d/
-cp ${JUBATUS_PREFIX}/share/jubatus/jubatus.profile ${BUILD_DIR}/.profile.d/jubatus.sh
+
+echo '-----> configure jubatus'
+
+sed -i 's/=$/=${BUILD_DIR}\/${VENDOR}/' ${BUILD_DIR}/${VENDOR}/share/jubatus/jubatus.profile
+cp ${BUILD_DIR}/${VENDOR}/share/jubatus/jubatus.profile ${BUILD_DIR}/.profile.d/jubatus.sh
+
 PROFILE_PATH=${BUILD_DIR}/.profile.d/jubatus.sh
